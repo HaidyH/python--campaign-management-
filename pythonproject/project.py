@@ -100,70 +100,72 @@ class project():
 
 
     def edit_user_projects(username):
-            projectname=input("please enter the name of the campaign : ")
-            try:
-                fileobj = open("projects.txt" , "r")
-                projectinfos = fileobj.readlines()
-                newline=[]
+        projectname=input("please enter the title of the campaign that you want to edit : ")
+
+        try:
+            fileobj = open("projects.txt" , "r")
+            projectinfos = fileobj.readlines()
+            newline=[]
+            isfound=False
+            #copy all except project that I want to delete 
+            for p in projectinfos:
+                projectinfo = p.strip("\n")
+                projectinfo=projectinfo.split(":")   
+                if projectinfo[1] != projectname:
+                    newline.append(p)
+
+            #get line that I want to delete
+            def edit(editindex,editname):
+
                 for p in projectinfos:
                     projectinfo = p.strip("\n")
                     projectinfo=projectinfo.split(":")
-                    if projectinfo[0] == username:
-                        if projectinfo[1]==projectname:                            
-                            while True:
-                                edit=input("what do you want to edit: \n choose 1 if you want to edit title \n choose 3 if you want to edit details \n choose 3 if you want to edit budget \n choose 4 if you want to edit start date \n choose 5 if you want to edit end date \n choose 6 if you want to exit \n")           
-                                if edit=="1":
-                                    oldtitle=projectinfo[1]
-                                    newtitle=input(" please enter new campaign title = ")
-                                    newline.append(p.replace(oldtitle,newtitle))
-                                    with open("projects.txt","w") as f:
-                                        for line in newline:
-                                            f.writelines(line)
-                                            print(" updated sucessfully <3 ")
-                                elif edit=="2":
-                                      olddetails=projectinfo[2]
-                                      newdetails=input(" please enter new campaign details = ")
-                                      newline.append(p.replace(olddetails,newdetails))
-                                      with open("projects.txt","w") as f:
-                                            for line in newline:
-                                                f.writelines(line)
-                                                print(" updated sucessfully <3 ")
-                                elif edit=="3":
-                                      oldbudget=projectinfo[3]
-                                      newbudget=input(" please enter new campaign budget = ")
-                                      newline.append(p.replace(oldbudget,newbudget))
-                                      with open("projects.txt","w") as f:
-                                        for line in newline:
-                                            f.writelines(line)
-                                            print(" updated sucessfully <3 ")
-                                elif edit=="4":
-                                    old_start_date=projectinfo[4]
-                                    new_start_date=input(" please enter new campaign's start date = ")
-                                    newline.append(p.replace(old_start_date,new_start_date))
-                                    with open("projects.txt","w") as f:
-                                        for line in newline:
-                                            f.writelines(line)
-                                            print(" updated sucessfully <3 ")
-                                elif edit=="5":
-                                   old_end_date=projectinfo[5]
-                                   new_end_date=input(" please enter new campaign's end date = ")
-                                   newline.append(p.replace(old_end_date,new_end_date))
-                                   with open("projects.txt","w") as f:
-                                        for line in newline:
-                                            f.writelines(line)
-                                            fileobj.close()
-                                            print(" updated sucessfully <3 ")
-                                elif edit=="6":
-                                    break
-                                else:
-                                    print("invalid input")
-                                    edit=input("what do you want to edit: \n choose 1 if you want to edit title \n choose 3 if you want to edit details \n choose 3 if you want to edit budget \n choose 4 if you want to edit start date \n choose 5 if you want to edit end date\n choose 6 if you want to exit \n")           
+                    if projectinfo[1] == projectname:                            
 
-                        else:
-                            print( f" user {projectinfo[0]} don't have any projects with name {projectname} please try again")
-                        break
-            except(Exception):
-                print(" no project found ")
+                        oldelement=projectinfo[editindex]
+                        newelement=input(f" please enter new campaign {editname}= ")
+                        newline.append(p.replace(oldelement,newelement))
+                        if projectinfo[0]==username:
+                            with open("projects.txt","w") as f:
+                                for line in newline:
+                                    f.writelines(line)
+                                print(" updated sucessfully <3 ")
+                                return True
+                return False
+
+            while True:                
+                inputedit=input("what do you want to edit: \n choose 1 if you want to edit title \n choose 3 if you want to edit details \n choose 3 if you want to edit budget \n choose 4 if you want to edit start date \n choose 5 if you want to edit end date\n choose 6 if you want to exit \n")           
+                if inputedit=="1": 
+                    edit(1,"title")
+                    isfound=edit(1,"title")
+                    break
+                elif inputedit=="2":
+                    edit(2,"details")
+                    isfound=edit(2,"details")
+                    break         
+                elif inputedit=="3":
+                    edit(3,"budget")
+                    isfound=edit(3,"budget")
+                    break          
+                elif inputedit=="4":
+                    edit(4,"start date")
+                    isfound=edit(4,"start date")
+                    break          
+                elif inputedit=="5":
+                    edit(5,"end date")
+                    isfound=edit(5,"end date")
+                    break          
+                elif inputedit=="6":
+                    break
+                else:
+                    print("invalid input")
+                    inputedit=input("what do you want to edit: \n choose 1 if you want to edit title \n choose 3 if you want to edit details \n choose 3 if you want to edit budget \n choose 4 if you want to edit start date \n choose 5 if you want to edit end date\n choose 6 if you want to exit \n")           
+
+            if not isfound:  
+                print( f" user {projectinfo[0]} don't have any projects with name {projectname} please try again")
+                
+        except(Exception) as e:
+            print(e)
 
 
 
@@ -174,7 +176,7 @@ class project():
             projectinfos = fileobj.readlines()
             newline=[]
             isfound=False
-            #copy all 
+            #copy all except project that I want to delete 
             for p in projectinfos:
                 projectinfo = p.strip("\n")
                 projectinfo=projectinfo.split(":")   
@@ -219,30 +221,7 @@ class project():
         except(Exception):
             print(" no file found ")   
                
-    # # print(today)
-    # # date dayzero=0:00:00
-    # # print(today-today)
-    # date_entry = input('Enter a date in YYYY-MM-DD format')
-    # year, month, day = map(int, date_entry.split('-'))
-    # date1 = date(year, month, day)
-    # print (date1)
-    # isDate(date1)
-
-# startDate=input("please enter the start date in YYYY-MM-DD format : ")
-# while(True):
-#     year, month, day = map(int, startDate.split('-'))
-#     if project.isDate(year, month, day):
-#             inputdate = date(year, month, day)
-#             if project.isInvalidDate(inputdate):
-#                 break
-#     startDate=input("please enter the start date  : ")
+    edit_user_projects("haidy")
 
 
-
-            # for p in projectinfos:
-            #     projectinfo = p.strip("\n")
-            #     projectinfo=projectinfo.split(":")
-            #     if projectinfo[0] == username and projectinfo[1] == projectname:
-            #         isfound=True
-
- 
+    
