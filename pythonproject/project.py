@@ -37,21 +37,24 @@ class project():
 
 
 
-
+    #function to add new project in projects file 
     def add_project(username):
 
+        #ask user to enter campaign details
 
+             #ask user to enter campaign title 
             title=input("please enter the title of the campaign : ")
             while project.check_user_input(title)!="string" or not title:
                 print("please enter a valid title \nNOTE : don't use numbers or empty value")
                 title=input("please enter the title of the campaign : ")
 
-            details=input("please enter the campaign detals : ")
+            #ask user to enter campaign details
+            details=input("please enter the campaign details : ")
             while project.check_user_input(details)!="string" or not details:
                 print("please enter a valid name \nNOTE : don't use numbers or empty value")
                 details=input("please enter the campaign detals : ")
 
-
+             #ask user to enter campaign total target
             totalTarget=input("please enter your total target : ")
             if not totalTarget:
                 totalTarget=250000
@@ -59,6 +62,7 @@ class project():
                 print("please enter a valid number  \nNOTE : don't use letters ")
                 totalTarget=input("please enter your total target : ")
             
+             #ask user to enter campaign start date 
             startDate=input("please enter the start date in YYYY-MM-DD format : ")
             while True:
                 year, month, day = map(int, startDate.split('-'))
@@ -68,6 +72,8 @@ class project():
                         break
                 startDate=input("please enter the start date  : ")
 
+
+             #ask user to enter campaign end date 
             endDate=input("please enter the end date in YYYY-MM-DD format : ")
             while True:
                 year, month, day = map(int, endDate.split('-'))
@@ -80,13 +86,16 @@ class project():
             while True:
                 done=input("please enter done to confirm : ")
                 if done=="done":
+                     # append new peojwct to projects file 
                     fileobj = open("projects.txt" , "a")
                     projectinfo = f"{username}:{title}:{details}:{totalTarget}EGP:{startDate}:{endDate}\n"
                     fileobj.write(projectinfo)
                     fileobj.close()
                     print(" project created successfully <3 ")
                     break
-
+    
+    
+    #function to view all project in projects file 
     def view_all_projects():
         try:
             fileobj = open("projects.txt" , "r")
@@ -98,7 +107,7 @@ class project():
             print("file not found please try again")
         
 
-
+    #function to edit project information for current login user
     def edit_user_projects(username):
         projectname=input("please enter the title of the campaign that you want to edit : ")
 
@@ -107,24 +116,27 @@ class project():
             projectinfos = fileobj.readlines()
             newline=[]
             isfound=False
-            #copy all except project that I want to delete 
+            #copy all except project that I want to edit 
             for p in projectinfos:
                 projectinfo = p.strip("\n")
                 projectinfo=projectinfo.split(":")   
                 if projectinfo[1] != projectname:
                     newline.append(p)
 
-            #get line that I want to delete
+            #get line that I want to edit
             def edit(editindex,editname):
 
                 for p in projectinfos:
                     projectinfo = p.strip("\n")
                     projectinfo=projectinfo.split(":")
                     if projectinfo[1] == projectname:                            
-
+                        #get new info from user
                         oldelement=projectinfo[editindex]
                         newelement=input(f" please enter new campaign {editname}= ")
+                        #append new info to newline array
                         newline.append(p.replace(oldelement,newelement))
+
+                        #check the user authorization before write into projects file 
                         if projectinfo[0]==username:
                             with open("projects.txt","w") as f:
                                 for line in newline:
@@ -132,7 +144,7 @@ class project():
                                 print(" updated sucessfully <3 ")
                                 return True
                 return False
-
+            #ask user what he want to edit edit
             while True:                
                 inputedit=input("what do you want to edit: \n choose 1 if you want to edit title \n choose 3 if you want to edit details \n choose 3 if you want to edit budget \n choose 4 if you want to edit start date \n choose 5 if you want to edit end date\n choose 6 if you want to exit \n")           
                 if inputedit=="1": 
@@ -182,11 +194,14 @@ class project():
                 projectinfo=projectinfo.split(":")   
                 if projectinfo[1] != projectname:
                     newline.append(p)
+
             for p in projectinfos:
                 projectinfo = p.strip("\n")
                 projectinfo=projectinfo.split(":")
+                #get line that I want to delete and make sure of login user authorization
                 if (projectinfo[1]==projectname and projectinfo[0]==username):
                     isfound=True
+                   #add all pro jects except project that I want to delete 
                     with open("projects.txt","w") as f:
                         for line in newline:
                             f.writelines(line)
@@ -210,6 +225,7 @@ class project():
             for p in projectinfos:
                 projectinfo = p.strip("\n")
                 projectinfo=projectinfo.split(":")
+                #get line that I want to select and print it 
                 if projectinfo[1] == projectname:
                     newline=[]
                     newline.append(p)
