@@ -25,37 +25,39 @@ def isValid(email):
 
 
 class user():
-
+#registration function
     def register():
-
-
+            #ask user to enter his first name 
             first_name=input("please enter your first name : ")
             while check_user_input(first_name)!="string" or not first_name:
                 print("please enter a valid name \nNOTE : don't use numbers or empty value")
                 first_name=input("please enter your first name : ")
 
+            #ask user to enter his last name 
             last_name=input("please enter your last name : ")
             while check_user_input(last_name)!="string" or not last_name:
                 print("please enter a valid name \nNOTE : don't use numbers or empty value")
                 last_name=input("please enter your last name : ")
 
-
+            #ask user to enter his email
             email=input("please enter your email : ")
             while(not isValid(email)):
                 email=input("please enter your email : ")
 
+            #ask user to enter his password  
             password=input("please enter your password : ")
             confirm_password=input("please confirm your password : ")
             while password != confirm_password:
                 print("password not match")
                 confirm_password=input("please confirm your password : ")
 
+            #ask user to enter his phone number
             phone=input("please enter your phone number : ")
             while check_user_input(phone)!="number" or not phone:
                 print("please enter a valid phone number  \nNOTE : don't use letters or empty value")
                 phone=input("please enter your phone number : ")
-                
-
+            
+            #append all previous information to userinfo.txt file
             while True:
                 done=input("please enter done to create account : ")
                 if done=="done":
@@ -67,13 +69,15 @@ class user():
                     break
 
 
-
+#login function
     def login():
-
+            #ask user to enter his email
             email=input("please enter your email : ")
+            #check email validation
             while not isValid(email):
                 email=input("please enter your email : ")
 
+            #ask user to enter his password
             password=input("please enter your password : ")
 
             try:
