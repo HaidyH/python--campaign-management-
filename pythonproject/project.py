@@ -38,7 +38,7 @@ class project():
 
 
 
-    def add_project():
+    def add_project(username):
 
 
             title=input("please enter the title of the campaign : ")
@@ -60,7 +60,7 @@ class project():
                 totalTarget=input("please enter your total target : ")
             
             startDate=input("please enter the start date in YYYY-MM-DD format : ")
-            while(not startDate):
+            while True:
                 year, month, day = map(int, startDate.split('-'))
                 if project.isDate(year, month, day):
                     inputdate = date(year, month, day)
@@ -69,19 +69,19 @@ class project():
                 startDate=input("please enter the start date  : ")
 
             endDate=input("please enter the end date in YYYY-MM-DD format : ")
-            while(not endDate):
+            while True:
                 year, month, day = map(int, endDate.split('-'))
                 if project.isDate(year, month, day):
                     inputdate = date(year, month, day)
-                    if project.isInvalidDate(inputdate):
+                    if project.isInvalidDate(inputdate) and endDate > startDate:
                         break
-                endDate=input("please enter the end date  : ")
+                endDate=input("please enter a valid end date that not before start date  : ")
 
             while True:
                 done=input("please enter done to confirm : ")
                 if done=="done":
                     fileobj = open("projects.txt" , "a")
-                    projectinfo = f"{title}:{details}:{totalTarget}EGP:{startDate}\n"
+                    projectinfo = f"{username}:{title}:{details}:{totalTarget}EGP:{startDate}:{endDate}\n"
                     fileobj.write(projectinfo)
                     fileobj.close()
                     print(" project created successfully <3 ")
@@ -164,6 +164,9 @@ class project():
                         break
             except(Exception):
                 print(" no project found ")
+
+
+
     def delete_projects(username):
         projectname=input("please enter the title of the campaign you want to delete : ")
         try:
@@ -171,16 +174,16 @@ class project():
             projectinfos = fileobj.readlines()
             newline=[]
             isfound=False
+            #copy all 
             for p in projectinfos:
                 projectinfo = p.strip("\n")
                 projectinfo=projectinfo.split(":")   
                 if projectinfo[1] != projectname:
                     newline.append(p)
-
             for p in projectinfos:
                 projectinfo = p.strip("\n")
-                projectinfo=projectinfo.split(":")  
-                if projectinfo[0] == username and projectinfo[1] == projectname:
+                projectinfo=projectinfo.split(":")
+                if (projectinfo[1]==projectname and projectinfo[0]==username):
                     isfound=True
                     with open("projects.txt","w") as f:
                         for line in newline:
@@ -191,14 +194,14 @@ class project():
                 print(" deleted sucessfully <3 ")
             else:
                 print(" no project found ") 
-                    
-        except(Exception):
-            print(" no file found ")  
+        except(Exception) as e:
+            print(e)  
 
 
 
     def search_for_project():
         projectname=input("please enter the title of the campaign : ")
+        isfound= False
         try:
             fileobj = open("projects.txt" , "r")
             projectinfos = fileobj.readlines()
@@ -208,10 +211,13 @@ class project():
                 if projectinfo[1] == projectname:
                     newline=[]
                     newline.append(p)
+                    isfound= True
                     for n in newline:
                         print(n)
+            if(not isfound):
+                print(" no project found ")           
         except(Exception):
-            print(" no project found ")   
+            print(" no file found ")   
                
     # # print(today)
     # # date dayzero=0:00:00
@@ -231,4 +237,12 @@ class project():
 #                 break
 #     startDate=input("please enter the start date  : ")
 
-    delete_projects("haidy")
+
+
+            # for p in projectinfos:
+            #     projectinfo = p.strip("\n")
+            #     projectinfo=projectinfo.split(":")
+            #     if projectinfo[0] == username and projectinfo[1] == projectname:
+            #         isfound=True
+
+ 
