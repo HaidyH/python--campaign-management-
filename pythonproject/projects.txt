@@ -1,2 +1,7 @@
-haidy:loreal:loreal is makeup and skin care company:250000EGP:2024-12-22
-maya:maybelene :dd:300000EGP:2024-1-1
+maya:maybelene :makeup company:300000EGP:2023-11-1:2023-12-1
+haidy:kiko:is makeup and skin care company:250000EGP:2023-12-1:2024-12-22
+maya:mn:makeup company:300000EGP:2023-11-1:2023-12-1
+maya:mightcinema:makeup company:300000EGP:2023-11-1:2023-12-1
+maya:amanda:makeup company:300000EGP:2023-11-1:2023-12-1
+haidy:lolo:makeup and skin care company:250000EGP:2023-12-1:2024-12-22
+

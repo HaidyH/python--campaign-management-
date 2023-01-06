@@ -39,7 +39,7 @@ class user():
                 print("please enter a valid name \nNOTE : don't use numbers or empty value")
                 last_name=input("please enter your last name : ")
 
-            #ask user to enter his email
+            #ask user to enter his email and chek if email is valid
             email=input("please enter your email : ")
             while(not isValid(email)):
                 email=input("please enter your email : ")
@@ -80,6 +80,7 @@ class user():
             #ask user to enter his password
             password=input("please enter your password : ")
 
+            #open user info file and check if user is exist
             try:
                 fileobj = open("usersinfo.txt" , "r")
                 users = fileobj.readlines()
@@ -88,8 +89,8 @@ class user():
                     userinfo=userinfo.split(":")
                     if userinfo[2] == email and userinfo[3]==password:
                         print( f"welcome back {userinfo[0]}  <3 ")
+                        #if user is exist ask him what he want to do 
                         if userinfo[0]:
-                            print("user mwgod")
                             while True:
                                 choice = input("press 1 if you want to add project \n press 2 if you want to view all projects \n press 3 if you want to edit your projects\n press 4 if you want to delete project  \n press 5 if you want to search for project\n ")
                                 if choice=="1":

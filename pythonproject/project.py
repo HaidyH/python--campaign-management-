@@ -86,6 +86,7 @@ class project():
                     fileobj.close()
                     print(" project created successfully <3 ")
                     break
+
     def view_all_projects():
         try:
             fileobj = open("projects.txt" , "r")
@@ -95,24 +96,6 @@ class project():
                 print(p)
         except(Exception):
             print("file not found please try again")
-
-    def edit_element(oldtitle,newtitle):
-        print("start file editing.....")
-        fileobj = open("projects.txt" , "a")
-        projectinfos = fileobj.readlines()
-        for p in projectinfos:
-            projectinfo = p.strip("\n")
-            projectinfo=projectinfo.split(":")
-            newline=[]
-            if projectinfo[1]==oldtitle:
-                oldtitle=projectinfo[1]
-                newtitle=input(" please enter new campaign title = ")
-                newline.append(p.replace(oldtitle,newtitle))
-                with open("projects.txt","w") as f:
-                    for line in newline:
-                        f.writelines(line)
-                        print(" updated sucessfully <3 ")
-                break
         
 
 
@@ -121,10 +104,10 @@ class project():
             try:
                 fileobj = open("projects.txt" , "r")
                 projectinfos = fileobj.readlines()
+                newline=[]
                 for p in projectinfos:
                     projectinfo = p.strip("\n")
                     projectinfo=projectinfo.split(":")
-                    newline=[]
                     if projectinfo[0] == username:
                         if projectinfo[1]==projectname:                            
                             while True:
@@ -168,6 +151,7 @@ class project():
                                    with open("projects.txt","w") as f:
                                         for line in newline:
                                             f.writelines(line)
+                                            fileobj.close()
                                             print(" updated sucessfully <3 ")
                                 elif edit=="6":
                                     break
@@ -180,8 +164,36 @@ class project():
                         break
             except(Exception):
                 print(" no project found ")
-    def delete_projects():
-        print("delete_projects")
+    def delete_projects(username):
+        projectname=input("please enter the title of the campaign you want to delete : ")
+        try:
+            fileobj = open("projects.txt" , "r")
+            projectinfos = fileobj.readlines()
+            newline=[]
+            isfound=False
+            for p in projectinfos:
+                projectinfo = p.strip("\n")
+                projectinfo=projectinfo.split(":")   
+                if projectinfo[1] != projectname:
+                    newline.append(p)
+
+            for p in projectinfos:
+                projectinfo = p.strip("\n")
+                projectinfo=projectinfo.split(":")  
+                if projectinfo[0] == username and projectinfo[1] == projectname:
+                    isfound=True
+                    with open("projects.txt","w") as f:
+                        for line in newline:
+                            f.writelines(line)
+                            fileobj.close()
+                        
+            if(isfound):
+                print(" deleted sucessfully <3 ")
+            else:
+                print(" no project found ") 
+                    
+        except(Exception):
+            print(" no file found ")  
 
 
 
@@ -219,4 +231,4 @@ class project():
 #                 break
 #     startDate=input("please enter the start date  : ")
 
-    search_for_project()
+    delete_projects("haidy")
