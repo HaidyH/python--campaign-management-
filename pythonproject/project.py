@@ -149,23 +149,23 @@ class project():
                 inputedit=input("what do you want to edit: \n choose 1 if you want to edit title \n choose 3 if you want to edit details \n choose 3 if you want to edit budget \n choose 4 if you want to edit start date \n choose 5 if you want to edit end date\n choose 6 if you want to exit \n")           
                 if inputedit=="1": 
                     edit(1,"title")
-                    isfound=edit(1,"title")
+                    isfound=True
                     break
                 elif inputedit=="2":
                     edit(2,"details")
-                    isfound=edit(2,"details")
+                    isfound=True
                     break         
                 elif inputedit=="3":
                     edit(3,"budget")
-                    isfound=edit(3,"budget")
+                    isfound=True
                     break          
                 elif inputedit=="4":
                     edit(4,"start date")
-                    isfound=edit(4,"start date")
+                    isfound=True
                     break          
                 elif inputedit=="5":
                     edit(5,"end date")
-                    isfound=edit(5,"end date")
+                    isfound=True
                     break          
                 elif inputedit=="6":
                     break
